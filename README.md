@@ -8,4 +8,4 @@ This is going to be the best day of my life.
 "Life's a climb, but the view is great."
 
 # Kinyera Alvine 
-Builing is hope!
+Building is hope!
