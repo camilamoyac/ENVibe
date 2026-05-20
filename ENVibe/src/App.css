@@ -1,4 +1,32 @@
-.counter {
+
+:root {
+  --primary-bg-color: #C2DEF9;
+  --primary-text-color: #092948;
+  --secondary-bg-color: #184709;
+  --secondary-text-color: #FFF9E0;
+}
+ 
+body {
+  color: var(--primary-text-color);
+  background-color: var(--primary-bg-color);
+  text-align: center;
+  /* This is for the paragraphs */
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+a {
+  color: var(--secondary-text-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: #398320;
+}
+
+/* .counter {
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -181,4 +209,4 @@
     right: 0;
     border-right-color: var(--border);
   }
-}
+} */
