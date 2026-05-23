@@ -1,3 +1,7 @@
+/* :root{
+  color: white;
+} */
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -18,7 +22,24 @@
 }
 
 .hero {
+  background-image: url(./assets/background.jpg);
+  background-size: cover;
   position: relative;
+  color: white;
+
+  nav {
+    display: flex;
+    margin: 10px;
+
+    .links {
+      text-decoration: none;
+    }
+
+    .login {
+      color: white;
+      justify-content: left;
+    }
+  }
 
   .base,
   .framework,
@@ -54,6 +75,24 @@
     transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
       scale(0.8);
   }
+}
+
+/* nav {
+  display: flex;
+  margin: 10px;  
+} */
+
+.home-h1 {
+  font-weight: bolder;
+  color: white;
+  font-size: 56px;
+}
+
+.home-btn {
+  font-weight: bolder;
+  margin: 15px;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 #center {
