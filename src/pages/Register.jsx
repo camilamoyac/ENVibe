@@ -18,7 +18,7 @@ function Register() {
 
   return (
     <div>
-      <h1>Create Account</h1>
+      <h1>Register</h1>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -40,7 +40,7 @@ function Register() {
         <br /><br />
 
         <button type="submit">
-          Register
+          Create Account
         </button>
       </form>
     </div>
