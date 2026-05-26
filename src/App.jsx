@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
+    <section className="hero">
     <Router>
       <Routes>
         {/* Public routes */}
@@ -30,5 +31,6 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
+    </section>
   );
 }
