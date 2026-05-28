@@ -21,11 +21,19 @@ export default function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <Dashboard />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         />
+        {/* <Route
+          path="/createVibe"
+          element={
+            // <ProtectedRoute>
+              <CreateVibe />
+            // </ProtectedRoute>
+          }
+        /> */}
 
         {/* Catch-all: redirect unknown paths to home */}
         <Route path="*" element={<Navigate to="/" replace />} />

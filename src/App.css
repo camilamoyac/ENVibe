@@ -21,9 +21,14 @@
   }
 }
 
+/* .stack {
+  direction: row;
+  align-items: center;
+} */
+
 .hero {
   background-image: url(./assets/background.jpg);
-  background-size: cover;
+  background-size: auto;
   position: relative;
   color: white;
 
