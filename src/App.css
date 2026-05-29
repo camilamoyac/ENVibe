@@ -21,9 +21,14 @@
   }
 }
 
+/* .stack {
+  direction: row;
+  align-items: center;
+} */
+
 .hero {
   background-image: url(./assets/background.jpg);
-  background-size: cover;
+  background-size: auto;
   position: relative;
   color: white;
 
@@ -40,6 +45,14 @@
       justify-content: left;
     }
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+
+  /* a {
+    color: lightblue;
+  } */
 
   .base,
   .framework,
@@ -155,7 +168,7 @@
   }
 
   a {
-    color: var(--text-h);
+    color: lightblue;
     font-size: 16px;
     border-radius: 6px;
     background: var(--social-bg);
@@ -165,6 +178,10 @@
     gap: 8px;
     text-decoration: none;
     transition: box-shadow 0.3s;
+
+    a:visited, a:active {
+      color: violet;
+    }
 
     &:hover {
       box-shadow: var(--shadow);

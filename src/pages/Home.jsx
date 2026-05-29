@@ -4,7 +4,7 @@ import "../App.css"
 
 export default function Home() {
   return (
-    <section className="hero">
+    <section>
       <nav className="home-nav">
         <img src="#" alt="Logo" />
         <Link className="links">
