@@ -8,7 +8,7 @@ const options = {
     numberOfTopResults: '5'
   },
   headers: {
-    'x-rapidapi-key': process.env.REACT_APP_RAPID_API_KEY,
+    'x-rapidapi-key': import.meta.env.VITE_RAPID_API_KEY,
     'x-rapidapi-host': 'spotify23.p.rapidapi.com',
     'Content-Type': 'application/json'
   }

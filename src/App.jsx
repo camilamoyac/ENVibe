@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreateVibe from "./pages/CreateVibe";
+import SavedPlaylists from "./pages/SavedPlaylists";
 
 export default function App() {
   return (
@@ -37,6 +38,15 @@ export default function App() {
             // </ProtectedRoute>
           }
         /> */}
+
+        <Route
+             path="/saved"
+          element={
+             <ProtectedRoute>
+            <SavedPlaylists />
+            </ProtectedRoute>
+          }
+/>
 
         {/* Catch-all: redirect unknown paths to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
