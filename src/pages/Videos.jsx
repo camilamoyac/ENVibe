@@ -1,4 +1,4 @@
-import { Stack, Box } from "mui/material";
+import { Stack, Box } from "@mui/material";
 import { VideoCard } from "./VideoCard"
 
 const Videos = ({ videos }) => {

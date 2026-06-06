@@ -1,47 +1,55 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
-// Pages (import paths may vary depending on your team's file names)
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+// // Pages (import paths may vary depending on your team's file names)
+// import Home from "./pages/Home";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
+// import Dashboard from "./pages/Dashboard";
+// import CreateVibe from "./pages/CreateVibe";
+
+// export default function App() {
+//   return (
+//     <section className="hero">
+//     <Router>
+//       <Routes>
+//         {/* Public routes */}
+//         <Route path="/" element={<Home />} />
+//         <Route path="/login" element={<Login />} />
+//         <Route path="/register" element={<Register />} />
+//         <Route path="/createVibe" element={<CreateVibe />} />
+
+
+//         {/* Protected routes — user must be logged in */}
+//         <Route
+//           path="/dashboard"
+//           element={
+//             // <ProtectedRoute>
+//               <Dashboard />
+//             // </ProtectedRoute>
+//           }
+//         />
+//         {/* <Route
+//           path="/createVibe"
+//           element={
+//             // <ProtectedRoute>
+//               <CreateVibe />
+//             // </ProtectedRoute>
+//           }
+//         /> */}
+
+//         {/* Catch-all: redirect unknown paths to home */}
+//         <Route path="*" element={<Navigate to="/" replace />} />
+//       </Routes>
+//     </Router>
+//     </section>
+//   );
+// }
+
 import CreateVibe from "./pages/CreateVibe";
 
-export default function App() {
-  return (
-    <section className="hero">
-    <Router>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/createVibe" element={<CreateVibe />} />
-
-
-        {/* Protected routes — user must be logged in */}
-        <Route
-          path="/dashboard"
-          element={
-            // <ProtectedRoute>
-              <Dashboard />
-            // </ProtectedRoute>
-          }
-        />
-        {/* <Route
-          path="/createVibe"
-          element={
-            // <ProtectedRoute>
-              <CreateVibe />
-            // </ProtectedRoute>
-          }
-        /> */}
-
-        {/* Catch-all: redirect unknown paths to home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
-    </section>
-  );
+function App() {
+  return <CreateVibe />;
 }
+
+export default App;
