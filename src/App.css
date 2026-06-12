@@ -1,6 +1,9 @@
-/* :root{
-  color: white;
-} */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(35, 40, 41);
+}
 
 .counter {
   font-size: 16px;

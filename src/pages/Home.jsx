@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <section>
       <nav className="home-nav">
-        <img src="#" alt="Logo" />
+        <img src="logo.png" alt="Logo" />
         <Link className="links">
           <p className="login">Login</p>
         </Link>
