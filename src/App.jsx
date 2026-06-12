@@ -11,7 +11,6 @@ import SavedPlaylists from "./pages/SavedPlaylists";
 
 export default function App() {
   return (
-    <section className="hero">
     <Router>
       <Routes>
         {/* Public routes */}
@@ -52,6 +51,5 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
-    </section>
   );
 }
