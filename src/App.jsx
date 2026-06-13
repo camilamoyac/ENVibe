@@ -7,10 +7,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreateVibe from "./pages/CreateVibe";
+import SavedPlaylists from "./pages/SavedPlaylists";
 
 export default function App() {
   return (
-    <section className="hero">
     <Router>
       <Routes>
         {/* Public routes */}
@@ -38,10 +38,18 @@ export default function App() {
           }
         /> */}
 
+        <Route
+             path="/saved"
+          element={
+             <ProtectedRoute>
+            <SavedPlaylists />
+            </ProtectedRoute>
+          }
+/>
+
         {/* Catch-all: redirect unknown paths to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
-    </section>
   );
 }

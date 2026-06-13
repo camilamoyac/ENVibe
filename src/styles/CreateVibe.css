@@ -1,0 +1,120 @@
+.home-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0 1rem;
+}
+
+h1{
+    color: azure;
+    display: block;
+    margin: 0 auto;
+    font-family: "Fredoka", sans-serif;
+    font-weight: 500;
+}
+
+h2{
+    color: azure;
+}
+
+.activity-grid,
+.mood-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.activity-card {
+  background: #595b65;
+  border-radius: 16px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: azure;
+}
+
+.mood-card {
+  border-radius: 16px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: azure;
+}
+
+.activity-card:hover,
+.mood-card:hover,
+.generate-btn:hover {
+  box-shadow:
+    0 0 10px azure;
+}
+
+.activity-card.selected,
+.mood-card.selected {
+  border: 2px solid azure;
+}
+
+.create {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.preview div {
+  border-radius: 24px;
+  min-height: 450px;
+  padding: 2rem;
+  color: white;
+  max-width: 92%;
+}
+
+.preview-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-text h2{
+    font-size: 2.5rem;
+}
+
+.preview-text p{
+    font-size: 1.25rem;
+}
+
+.generate-btn{
+    margin: 1rem auto;
+    padding: 1rem;
+    background: radial-gradient(
+        circle,
+        #7285ff 0%,
+        #ff65fa 100%
+    );
+    /* background: linear-gradient(
+        90deg,
+        #ff7ffb,
+        #8392f6,
+        #ff7ffb
+    ); */
+    border: none;
+    border-radius: 100px;
+    max-width: fit-content;
+    padding: 1rem 2rem;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    cursor: pointer;
+    color: black;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.25);
+}
