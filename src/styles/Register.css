@@ -1,0 +1,23 @@
+/* ─── Register extras ────────────────────────────────────────────────────── */
+
+.reg-strength {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.reg-strength-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 100px;
+  background: #595b65;
+  transition: background 0.3s;
+}
+
+.reg-strength-bar[data-strength="weak"]   { background: #ff65fa; width: 33%; }
+.reg-strength-bar[data-strength="ok"]     { background: #7285ff; width: 66%; }
+.reg-strength-bar[data-strength="strong"] {
+  background: radial-gradient(circle, #7285ff 0%, #ff65fa 100%);
+  width: 100%;
+  box-shadow: 0 0 6px azure;
+}
