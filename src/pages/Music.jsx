@@ -1,4 +1,4 @@
-import { Stack, Box } from "mui/material";
+import { Stack, Box } from "@mui/material";
 import { MusicCard } from "./MusicCard"
 
 const Music = ({ music }) => {

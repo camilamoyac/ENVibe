@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../App.css"
 
 import { fetchFromAPI } from "../utilities/fetchFromAPI";
-import { Videos } from "./Videos"
+import { Videos } from "./Music"
 
 const CreateVibe = () => {
 
