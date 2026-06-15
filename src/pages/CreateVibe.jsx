@@ -1,58 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
-import "../styles/CreateVibe.css";
+import "../App.css"
 
-// import { fetchFromAPI } from "../utilities/fetchFromAPI";
-// import { Videos } from "./Videos"
-
-const moods = [
-  {
-    name: "Cozy",
-    colors: ["#84592b", "#e8d1a7"],
-    description: "Warm earthy tones and soft ambient music.",
-    icon: "☕"
-  },
-  {
-    name: "Focused",
-    colors: ["#404959", "#b2b9ce"],
-    description: "Clean visuals and distraction-free sound.",
-    icon: "🧠"
-  },
-  {
-    name: "Energetic",
-    colors: ["#e56d49", "#89a561"],
-    description: "Bright colors and upbeat motivation.",
-    icon: "⚡"
-  },
-  {
-    name: "Romantic",
-    colors: ["#c87d87", "#f0c4cb"],
-    description: "Soft colors, heartfelt melodies, and a dreamy atmosphere.",
-    icon: "🌹"
-  },
-  {
-    name: "Relaxed",
-    colors: ["#71713b", "#e2dcd0"],
-    description: "Gentle colors and calming ambience.",
-    icon: "🌿"
-  },
-  {
-    name: "Intense",
-    colors: ["#1d0302", "#c70f06"],
-    description: "Bold visuals, powerful energy, and an immersive atmosphere.",
-    icon: "🔥"
-  }
-];
-
-const activities = [
-  "Reading",
-  "Studying",
-  "Working out",
-  "Meditating",
-  "Cooking",
-  "Cleaning"
-];
+import { fetchFromAPI } from "../utilities/fetchFromAPI";
+import { Videos } from "./Music"
 
 const CreateVibe = () => {
 
