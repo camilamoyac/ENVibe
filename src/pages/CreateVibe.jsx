@@ -4,43 +4,40 @@ import { fetchFromAPI } from "../utilities/fetchFromAPI";
 import "../App.css";
 import "../styles/CreateVibe.css";
 
-// import { fetchFromAPI } from "../utilities/fetchFromAPI";
-// import { Videos } from "./Videos"
-
 const moods = [
   {
     name: "Cozy",
-    colors: ["#84592b", "#e8d1a7"],
+    colors: ["#84592b", "#e8d1a7", "#093824"],
     description: "Warm earthy tones and soft ambient music.",
     icon: "☕"
   },
   {
     name: "Focused",
-    colors: ["#404959", "#b2b9ce"],
+    colors: ["#404959", "#b2b9ce", "#CBE896"],
     description: "Clean visuals and distraction-free sound.",
     icon: "🧠"
   },
   {
     name: "Energetic",
-    colors: ["#e56d49", "#89a561"],
+    colors: ["#e56d49", "#89a561", "#0D3B66"],
     description: "Bright colors and upbeat motivation.",
     icon: "⚡"
   },
   {
     name: "Romantic",
-    colors: ["#c87d87", "#f0c4cb"],
+    colors: ["#c87d87", "#f0c4cb", "#561D25"],
     description: "Soft colors, heartfelt melodies, and a dreamy atmosphere.",
     icon: "🌹"
   },
   {
     name: "Relaxed",
-    colors: ["#71713b", "#e2dcd0"],
+    colors: ["#71713b", "#e2dcd0", "#3A3335"],
     description: "Gentle colors and calming ambience.",
     icon: "🌿"
   },
   {
     name: "Intense",
-    colors: ["#1d0302", "#c70f06"],
+    colors: ["#1d0302", "#c70f06", "#FBBD5A"],
     description: "Bold visuals, powerful energy, and an immersive atmosphere.",
     icon: "🔥"
   }
@@ -69,10 +66,21 @@ const CreateVibe = () => {
     }
 
     try {
-      const query =
-        `${selectedMood.name} ${selectedActivity} instrumental playlist`;
+      const instrumentalActivities = [
+        "Reading",
+        "Studying",
+        "Meditating"
+      ];
+
+      const query = instrumentalActivities.includes(selectedActivity)
+        ? `${selectedMood.name} ${selectedActivity} instrumental playlist`
+        : `${selectedMood.name} ${selectedActivity} playlist`;
       console.log("Searching:", query);
       const data = await fetchFromAPI(query);
+      if (!data.playlists?.items?.length) {
+        alert("No playlists found for this vibe.");
+        return;
+      }
       const playlist = data.playlists.items[0];
 
       navigate("/environment", {
@@ -85,6 +93,12 @@ const CreateVibe = () => {
 
     } catch (error) {
       console.error(error);
+      if (error.response) {
+        console.log("Status:", error.response.status);
+        console.log("Data:", error.response.data);
+      }
+
+      alert("Something went wrong while generating your vibe. Please try again.");
     }
   };
 
