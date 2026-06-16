@@ -33,14 +33,34 @@ h2{
 .activity-card {
   background: #595b65;
   border-radius: 16px;
-  padding: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
   color: azure;
   min-height: 70px;
+
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.activity-overlay {
+  position: absolute;
+  inset: 0;
+
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.605);
+}
+
+.activity-overlay h3 {
+  display: flex;
+  align-self: center;
+  justify-self: center;
 }
 
 .mood-card {
@@ -57,6 +77,10 @@ h2{
 
 h3 {
     font-weight: 500;
+}
+
+.activity-card:hover {
+  transform: scale(1.03);
 }
 
 .activity-card:hover,

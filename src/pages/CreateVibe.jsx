@@ -44,12 +44,30 @@ const moods = [
 ];
 
 const activities = [
-  "Reading",
-  "Studying",
-  "Working out",
-  "Meditating",
-  "Cooking",
-  "Cleaning"
+  {
+    name: "Reading",
+    image: "/activities/reading.jpg"
+  },
+  {
+    name: "Studying",
+    image: "/activities/studying.jpg"
+  },
+  {
+    name: "Working out",
+    image: "/activities/workingout.jpg"
+  },
+  {
+    name: "Meditating",
+    image: "/activities/meditating.jpg"
+  },
+  {
+    name: "Cooking",
+    image: "/activities/cooking.jpg"
+  },
+  {
+    name: "Cleaning",
+    image: "/activities/cleaning.jpg"
+  }
 ];
 
 const CreateVibe = () => {
@@ -149,13 +167,27 @@ const CreateVibe = () => {
           <div className="activity-grid">
             {activities.map((activity) => (
               <div
-                key={activity}
+                key={activity.name}
                 className={`activity-card ${
-                  selectedActivity === activity ? "selected" : ""
+                  selectedActivity === activity.name ? "selected" : ""
                 }`}
-                onClick={() => setSelectedActivity(activity)}
+                onClick={() => setSelectedActivity(activity.name)}
               >
-                <h3>{activity}</h3>
+                <div
+                  className={`activity-card ${
+                    selectedActivity === activity.name
+                      ? "selected"
+                      : ""
+                  }`}
+                  style={{
+                    backgroundImage: `url(${activity.image})`
+                  }}
+                  onClick={() => setSelectedActivity(activity.name)}
+                >
+                  <div className="activity-overlay">
+                    <h3>{activity.name}</h3>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
