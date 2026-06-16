@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { collection, getDocs, orderBy, query} from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
 import "../styles/SavedVibes.css";
 
 function SavedVibes() {
@@ -9,39 +10,37 @@ function SavedVibes() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchVibes = async () => {
-      try {
-        const user = auth.currentUser;
-
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (!user) return;
 
+        try {
         const vibesRef = collection(
-          db,
-          "users",
-          user.uid,
-          "vibes"
+            db,
+            "users",
+            user.uid,
+            "vibes"
         );
 
         const q = query(
-          vibesRef,
-          orderBy("createdAt", "desc")
+            vibesRef,
+            orderBy("createdAt", "desc")
         );
 
         const snapshot = await getDocs(q);
 
         const vibeList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
+            id: doc.id,
+            ...doc.data(),
         }));
 
         setVibes(vibeList);
-      } catch (error) {
+        } catch (error) {
         console.error(error);
-      }
-    };
+        }
+    });
 
-    fetchVibes();
-  }, []);
+    return () => unsubscribe();
+    }, []);
 
   return (
     <div className="saved-vibes">
