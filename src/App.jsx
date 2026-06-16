@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreateVibe from "./pages/CreateVibe";
 import SavedPlaylists from "./pages/SavedPlaylists";
+import Environment from "./pages/Environment";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/createVibe" element={<CreateVibe />} />
+        <Route path="/environment" element={<Environment />} />
 
 
         {/* Protected routes — user must be logged in */}

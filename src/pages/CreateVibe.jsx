@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchFromAPI } from "../utilities/fetchFromAPI";
 import "../App.css";
 import "../styles/CreateVibe.css";
 
@@ -59,15 +60,33 @@ const CreateVibe = () => {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [selectedMood, setSelectedMood] = useState(null);
   const [videos, setVideos] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!selectedActivity || !selectedMood) return;
+  const generateVibe = async () => {
+    if (!selectedMood || !selectedActivity) {
+      alert("Please select a mood and activity");
+      return;
+    }
 
-    console.log(
-      `${selectedMood?.name || "None"} music for ${selectedActivity}`
-    );
+    try {
+      const query =
+        `${selectedMood.name} ${selectedActivity} instrumental playlist`;
+      console.log("Searching:", query);
+      const data = await fetchFromAPI(query);
+      const playlist = data.playlists.items[0];
 
-  }, [selectedActivity, selectedMood]);
+      navigate("/environment", {
+        state: {
+          mood: selectedMood,
+          activity: selectedActivity,
+          playlist
+        }
+      });
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <section>
@@ -121,7 +140,7 @@ const CreateVibe = () => {
             </div>
           ))}
           </div>
-          <button className="generate-btn">
+          <button className="generate-btn" onClick={generateVibe}>
             GENerate
           </button>
         </div>
