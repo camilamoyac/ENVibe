@@ -1,17 +1,20 @@
-import { Stack } from "@mui/material";
-import { Link } from "react-router-dom"
-import "../App.css"
+import { Link, useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import Navbar from "../components/Nav.jsx";
+import "../App.css";
+import "../styles/CreateVibe.css";
 
 export default function Dashboard() {
   return (
-    <Stack className="stack" p={2} sx={{ position: "sticky", top: 0, justifyContent: "space-between"}}>
-      {/* <h1>Dashboard</h1>
-      <p>Coming Soon...</p> */}
-      <nav>
-        <Link to="/">Home | </Link>
-        <Link to="/create">Create Vibe | </Link>
-        <Link to="/save">Save Vibe</Link>
-      </nav>
-    </Stack>
+    <div className="ev-page">
+      <Navbar />
+      <main style={{ padding: "2rem", textAlign: "center" }}>
+        <h1 className="ev-h1">Dashboard</h1>
+        <p className="ev-muted" style={{ marginTop: "0.5rem" }}>
+          Coming soon  your saved vibes and history will appear here.
+        </p>
+      </main>
+    </div>
   );
 }

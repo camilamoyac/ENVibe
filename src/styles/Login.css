@@ -8,7 +8,7 @@
   ),
   rgb(35, 40, 41);
 }
-
+.ev-logo { cursor: pointer; }
 .auth-main {
   flex: 1;
   display: flex;

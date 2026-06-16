@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      navigate("/dashboard"); // ← fixed: goes to Dashboard after login
     } catch (err) {
       setError("Incorrect email or password. Please try again.");
     } finally {
@@ -28,14 +28,12 @@ export default function Login() {
 
   return (
     <div className="ev-page auth-page">
-      {/* Nav */}
       <nav className="ev-nav">
         <Link to="/">
           <img src="/logo.png" alt="ENVibe" className="ev-logo" />
         </Link>
       </nav>
 
-      {/* Card */}
       <main className="auth-main">
         <div className="auth-card">
           <h1 className="ev-h1" style={{ fontSize: "2rem", marginBottom: "0.25rem" }}>
