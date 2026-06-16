@@ -106,7 +106,9 @@ const CreateVibe = () => {
     <section>
       {/* ── Nav ── */}
       <nav className="ev-nav">
-        <img src="/logo.png" alt="ENVibe" className="ev-logo" />
+        <Link to="/">
+          <img src="/logo.png" alt="ENVibe" className="ev-logo" />
+        </Link>
         <ul className="ev-nav-links">
           <li><Link to="/saved" className="ev-link">My Saved Vibes</Link></li>
           <li><Link to="/logout" className="ev-link">Logout</Link></li>

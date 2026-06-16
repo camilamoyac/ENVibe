@@ -59,6 +59,10 @@
   opacity: 0;
 }
 
+.panel-text {
+    max-width: 45%;
+}
+
 .buttons {
     display: flex;
     justify-content: space-evenly;
