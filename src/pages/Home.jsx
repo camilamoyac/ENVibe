@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../styles/General.css";
+//import "../styles/CreateVibe.css";
 import "../styles/Home.css";
 
 export default function Home() {

@@ -1,0 +1,10 @@
+/* Navbar responsive */
+@media (max-width: 600px) {
+  .ev-nav-links {
+    gap: 0.5rem;
+  }
+  .ev-nav-links .ev-link {
+    font-size: 0.95rem;
+  }
+}
+.ev-logo { cursor: pointer; }
