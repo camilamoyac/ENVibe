@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import "../styles/CreateVibe.css";
+import "../styles/General.css";
 import "../styles/Login.css";
 import "../styles/Register.css";
 

@@ -18,11 +18,11 @@ export default function Home() {
       <section className="home-hero">
         <div className="home-hero-overlay" />
         <div className="home-hero-content">
-          <p className="home-eyebrow">Your music. Your mood.</p>
+          <p className="home-eyebrow">Your music. Your mood. Your vibe.</p>
           <h1 className="ev-h1">Welcome to ENVibe</h1>
           <p className="home-tagline">
-            Tell us what you're doing  reading, cooking, working out  and we'll
-            build a playlist that fits the moment.
+            Tell us how you're feeling and what you're doing. We'll build your
+            perfect digital environment.
           </p>
           <div className="home-cta-group">
             <Link to="/createVibe" className="ev-btn">Create a Vibe</Link>
@@ -40,7 +40,7 @@ export default function Home() {
           {[
             { emoji: "🎭", title: "Pick your mood", desc: "Choose how you're feeling right now." },
             { emoji: "🏃", title: "Pick an activity", desc: "Tell us what you're up to." },
-            { emoji: "🎵", title: "Get your playlist", desc: "We generate the perfect vibe for you." },
+            { emoji: "🎵", title: "Get your environment", desc: "We generate the perfect vibe for you." },
           ].map((step, i) => (
             <div className="ev-card home-step-card" key={i}>
               <span className="home-step-emoji">{step.emoji}</span>

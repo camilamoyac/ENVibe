@@ -195,6 +195,11 @@ const CreateVibe = () => {
           </div>
         </div>
       </div>
+
+      {/* ── Footer ── */}
+      <footer className="home-footer">
+        <span className="ev-muted">© 2026 ENVibe · CSE 499</span>
+      </footer>
     </section>
   );
 };
