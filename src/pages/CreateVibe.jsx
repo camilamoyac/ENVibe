@@ -90,10 +90,12 @@ const CreateVibe = () => {
 
   return (
     <section>
-      <nav>
-        <ul className="home-nav">
-          <li><a href="./Home.jsx"></a><img src="logo.png" alt="ENVibe logo" width={150}/></li>
-          <li><a href="./Login.jsx"></a>Login</li>
+      {/* ── Nav ── */}
+      <nav className="ev-nav">
+        <img src="/logo.png" alt="ENVibe" className="ev-logo" />
+        <ul className="ev-nav-links">
+          <li><Link to="/saved" className="ev-link">My Saved Vibes</Link></li>
+          <li><Link to="/logout" className="ev-link">Logout</Link></li>
         </ul>
       </nav>
 
@@ -102,20 +104,6 @@ const CreateVibe = () => {
       <div className="create">
 
         <div className="selection">
-          <h2>Pick an Activity</h2>
-          <div className="activity-grid">
-            {activities.map((activity) => (
-              <div
-                key={activity}
-                className={`activity-card ${
-                  selectedActivity === activity ? "selected" : ""
-                }`}
-                onClick={() => setSelectedActivity(activity)}
-              >
-                <h3>{activity}</h3>
-              </div>
-            ))}
-          </div>
 
           <h2>Choose a Mood</h2>
           <div className="mood-grid">
@@ -140,6 +128,22 @@ const CreateVibe = () => {
             </div>
           ))}
           </div>
+
+          <h2>Pick an Activity</h2>
+          <div className="activity-grid">
+            {activities.map((activity) => (
+              <div
+                key={activity}
+                className={`activity-card ${
+                  selectedActivity === activity ? "selected" : ""
+                }`}
+                onClick={() => setSelectedActivity(activity)}
+              >
+                <h3>{activity}</h3>
+              </div>
+            ))}
+          </div>
+          
           <button className="generate-btn" onClick={generateVibe}>
             GENerate
           </button>
@@ -180,6 +184,11 @@ const CreateVibe = () => {
         </div>
   
       </div>
+
+      {/* ── Footer ── */}
+      <footer className="home-footer">
+        <span className="ev-muted">© 2026 ENVibe · CSE 499</span>
+      </footer>
     </section>
   );
 }

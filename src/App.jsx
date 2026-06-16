@@ -5,7 +5,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
 import CreateVibe from "./pages/CreateVibe";
 import SavedPlaylists from "./pages/SavedPlaylists";
 import Environment from "./pages/Environment";
@@ -18,27 +17,18 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/createVibe" element={<CreateVibe />} />
         <Route path="/environment" element={<Environment />} />
 
 
         {/* Protected routes — user must be logged in */}
         <Route
-          path="/dashboard"
-          element={
-            // <ProtectedRoute>
-              <Dashboard />
-            // </ProtectedRoute>
-          }
-        />
-        {/* <Route
           path="/createVibe"
           element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <CreateVibe />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }
-        /> */}
+        />
 
         <Route
              path="/saved"
@@ -47,7 +37,7 @@ export default function App() {
             <SavedPlaylists />
             </ProtectedRoute>
           }
-/>
+        />
 
         {/* Catch-all: redirect unknown paths to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
