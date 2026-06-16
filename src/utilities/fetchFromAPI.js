@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'https://spotify23.p.rapidapi.com/search/'
+const BASE_URL = 'https://spotify23.p.rapidapi.com/search'
 
 const options = {
 //   url: BASE_URL,
@@ -14,8 +14,15 @@ const options = {
   }
 };
 
-export const fetchFromAPI = async (url) => {
-    const { data } = await axios.get(`${BASE_URL}/${url}`, options);
+export const fetchFromAPI = async (query) => {
+  const { data } = await axios.get(BASE_URL, {
+    ...options,
+    params: {
+      q: query,
+      type: "playlists",
+      numberOfTopResults: "5"
+    }
+  });
 
-    return data
-}
+  return data;
+};

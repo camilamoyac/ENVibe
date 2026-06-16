@@ -1,31 +1,135 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "../App.css"
-
+import { Link, useNavigate } from "react-router-dom";
 import { fetchFromAPI } from "../utilities/fetchFromAPI";
-import { Videos } from "./Music"
+import "../App.css";
+import "../styles/CreateVibe.css";
+
+const moods = [
+  {
+    name: "Cozy",
+    colors: ["#84592b", "#e8d1a7", "#093824"],
+    description: "Warm earthy tones and soft ambient music.",
+    icon: "☕"
+  },
+  {
+    name: "Focused",
+    colors: ["#404959", "#b2b9ce", "#CBE896"],
+    description: "Clean visuals and distraction-free sound.",
+    icon: "🧠"
+  },
+  {
+    name: "Energetic",
+    colors: ["#e56d49", "#89a561", "#0D3B66"],
+    description: "Bright colors and upbeat motivation.",
+    icon: "⚡"
+  },
+  {
+    name: "Romantic",
+    colors: ["#c87d87", "#f0c4cb", "#561D25"],
+    description: "Soft colors, heartfelt melodies, and a dreamy atmosphere.",
+    icon: "🌹"
+  },
+  {
+    name: "Relaxed",
+    colors: ["#71713b", "#e2dcd0", "#3A3335"],
+    description: "Gentle colors and calming ambience.",
+    icon: "🌿"
+  },
+  {
+    name: "Intense",
+    colors: ["#1d0302", "#c70f06", "#FBBD5A"],
+    description: "Bold visuals, powerful energy, and an immersive atmosphere.",
+    icon: "🔥"
+  }
+];
+
+const activities = [
+  {
+    name: "Reading",
+    image: "/activities/reading.jpg"
+  },
+  {
+    name: "Studying",
+    image: "/activities/studying.jpg"
+  },
+  {
+    name: "Working out",
+    image: "/activities/workingout.jpg"
+  },
+  {
+    name: "Meditating",
+    image: "/activities/meditating.jpg"
+  },
+  {
+    name: "Cooking",
+    image: "/activities/cooking.jpg"
+  },
+  {
+    name: "Cleaning",
+    image: "/activities/cleaning.jpg"
+  }
+];
 
 const CreateVibe = () => {
 
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [selectedMood, setSelectedMood] = useState(null);
   const [videos, setVideos] = useState([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!selectedActivity || !selectedMood) return;
+  const generateVibe = async () => {
+    if (!selectedMood || !selectedActivity) {
+      alert("Please select a mood and activity");
+      return;
+    }
 
-    console.log(
-      `${selectedMood?.name || "None"} music for ${selectedActivity}`
-    );
+    try {
+      const instrumentalActivities = [
+        "Reading",
+        "Studying",
+        "Meditating"
+      ];
 
-  }, [selectedActivity, selectedMood]);
+      const query = instrumentalActivities.includes(selectedActivity)
+        ? `${selectedMood.name} ${selectedActivity} instrumental playlist`
+        : `${selectedMood.name} ${selectedActivity} playlist`;
+      console.log("Searching:", query);
+      const data = await fetchFromAPI(query);
+      if (!data.playlists?.items?.length) {
+        alert("No playlists found for this vibe.");
+        return;
+      }
+      const playlist = data.playlists.items[0];
+
+      navigate("/environment", {
+        state: {
+          mood: selectedMood,
+          activity: selectedActivity,
+          playlist
+        }
+      });
+
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        console.log("Status:", error.response.status);
+        console.log("Data:", error.response.data);
+      }
+
+      alert("Something went wrong while generating your vibe. Please try again.");
+    }
+  };
 
   return (
     <section>
-      <nav>
-        <ul className="home-nav">
-          <li><a href="./Home.jsx"></a><img src="logo.png" alt="ENVibe logo" width={150}/></li>
-          <li><a href="./Login.jsx"></a>Login</li>
+      {/* ── Nav ── */}
+      <nav className="ev-nav">
+        <Link to="/">
+          <img src="/logo.png" alt="ENVibe" className="ev-logo" />
+        </Link>
+        <ul className="ev-nav-links">
+          <li><Link to="/saved" className="ev-link">My Saved Vibes</Link></li>
+          <li><Link to="/logout" className="ev-link">Logout</Link></li>
         </ul>
       </nav>
 
@@ -34,20 +138,6 @@ const CreateVibe = () => {
       <div className="create">
 
         <div className="selection">
-          <h2>Pick an Activity</h2>
-          <div className="activity-grid">
-            {activities.map((activity) => (
-              <div
-                key={activity}
-                className={`activity-card ${
-                  selectedActivity === activity ? "selected" : ""
-                }`}
-                onClick={() => setSelectedActivity(activity)}
-              >
-                <h3>{activity}</h3>
-              </div>
-            ))}
-          </div>
 
           <h2>Choose a Mood</h2>
           <div className="mood-grid">
@@ -72,7 +162,37 @@ const CreateVibe = () => {
             </div>
           ))}
           </div>
-          <button className="generate-btn">
+
+          <h2>Pick an Activity</h2>
+          <div className="activity-grid">
+            {activities.map((activity) => (
+              <div
+                key={activity.name}
+                className={`activity-card ${
+                  selectedActivity === activity.name ? "selected" : ""
+                }`}
+                onClick={() => setSelectedActivity(activity.name)}
+              >
+                <div
+                  className={`activity-card ${
+                    selectedActivity === activity.name
+                      ? "selected"
+                      : ""
+                  }`}
+                  style={{
+                    backgroundImage: `url(${activity.image})`
+                  }}
+                  onClick={() => setSelectedActivity(activity.name)}
+                >
+                  <div className="activity-overlay">
+                    <h3>{activity.name}</h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <button className="generate-btn" onClick={generateVibe}>
             GENerate
           </button>
         </div>
@@ -112,6 +232,11 @@ const CreateVibe = () => {
         </div>
   
       </div>
+
+      {/* ── Footer ── */}
+      <footer className="home-footer">
+        <span className="ev-muted">© 2026 ENVibe · CSE 499</span>
+      </footer>
     </section>
   );
 }
