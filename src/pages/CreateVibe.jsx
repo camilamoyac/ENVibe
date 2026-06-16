@@ -7,13 +7,13 @@ import "../styles/CreateVibe.css";
 const moods = [
   {
     name: "Cozy",
-    colors: ["#84592b", "#e8d1a7", "#093824"],
+    colors: ["#84592b", "#e8d1a7", "#1a2f0b"],
     description: "Warm earthy tones and soft ambient music.",
     icon: "☕"
   },
   {
     name: "Focused",
-    colors: ["#404959", "#b2b9ce", "#CBE896"],
+    colors: ["#404959", "#b2b9ce", "#c5db9e"],
     description: "Clean visuals and distraction-free sound.",
     icon: "🧠"
   },
@@ -31,13 +31,13 @@ const moods = [
   },
   {
     name: "Relaxed",
-    colors: ["#71713b", "#e2dcd0", "#3A3335"],
+    colors: ["#71713b", "#e2dcd0", "#333a39"],
     description: "Gentle colors and calming ambience.",
     icon: "🌿"
   },
   {
     name: "Intense",
-    colors: ["#1d0302", "#c70f06", "#FBBD5A"],
+    colors: ["#1d0302", "#c70f06", "#f78349"],
     description: "Bold visuals, powerful energy, and an immersive atmosphere.",
     icon: "🔥"
   }
@@ -93,7 +93,6 @@ const CreateVibe = () => {
       const query = instrumentalActivities.includes(selectedActivity)
         ? `${selectedMood.name} ${selectedActivity} instrumental playlist`
         : `${selectedMood.name} ${selectedActivity} playlist`;
-      console.log("Searching:", query);
       const data = await fetchFromAPI(query);
       if (!data.playlists?.items?.length) {
         alert("No playlists found for this vibe.");
@@ -128,7 +127,7 @@ const CreateVibe = () => {
           <img src="/logo.png" alt="ENVibe" className="ev-logo" />
         </Link>
         <ul className="ev-nav-links">
-          <li><Link to="/saved" className="ev-link">My Saved Vibes</Link></li>
+          <li><Link to="/saved-vibes" className="ev-link">My Saved Vibes</Link></li>
           <li><Link to="/logout" className="ev-link">Logout</Link></li>
         </ul>
       </nav>

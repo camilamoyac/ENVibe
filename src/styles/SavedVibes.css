@@ -1,0 +1,58 @@
+.home-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0 1rem;
+}
+
+h1{
+    color: azure;
+    display: block;
+    margin: 0 auto;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.vibe-card h2{
+    color: azure;
+    font-weight: 400;
+}
+
+.vibe-card h3{
+    font-weight: 300;
+}
+
+.saved-vibes {
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.saved-vibes-grid {
+  margin: 0 auto;
+  max-width: 80%;
+  display: grid;
+  grid-template-columns:
+    repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.vibe-card {
+  max-width: 350px;
+  min-height: 225px;
+  border-radius: 16px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: azure;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.vibe-card:hover{
+  box-shadow:
+    0 0 10px azure;
+}
