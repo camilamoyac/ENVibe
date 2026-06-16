@@ -1,4 +1,9 @@
 /* ─── Home Page ─────────────────────────────────────────────────────────── */
+#root {
+  width: 100%;
+  max-width: 100%;
+  border-inline: none;
+}
 
 /* Hero – keeps your background.jpg, fixes weird layout */
 .home-hero {
@@ -7,9 +12,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(../assets/background.jpg);
-  background-size: cover;
-  background-position: center top;
+  background-image: url(/background.jpg) !important;
+  background-size: cover !important;
+  background-position: center top !important;
   overflow: hidden;
 }
 
@@ -94,7 +99,7 @@
   font-weight: 600;
   color: azure;
 }
-
+.ev-logo { cursor: pointer; }
 /* Footer */
 .home-footer {
   margin-top: auto;

@@ -126,9 +126,10 @@ h3 {
 .preview-text h2{
     font-size: 2.5rem;
 }
-
-.preview-text p{
-    font-size: 1.25rem;
+.ev-logo { cursor: pointer; }
+.ev-muted {
+  color: rgba(240,255,255,0.55);
+  font-size: 0.95rem;
 }
 
 .generate-btn{

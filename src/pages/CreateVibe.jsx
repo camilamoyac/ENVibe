@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { fetchFromAPI } from "../utilities/fetchFromAPI";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 import "../styles/CreateVibe.css";
+import Navbar from "../components/Nav";
+import { fetchFromAPI } from "../utilities/fetchFromAPI";
+
 
 const moods = [
   {
@@ -44,80 +46,51 @@ const moods = [
 ];
 
 const activities = [
-  {
-    name: "Reading",
-    image: "/activities/reading.jpg"
-  },
-  {
-    name: "Studying",
-    image: "/activities/studying.jpg"
-  },
-  {
-    name: "Working out",
-    image: "/activities/workingout.jpg"
-  },
-  {
-    name: "Meditating",
-    image: "/activities/meditating.jpg"
-  },
-  {
-    name: "Cooking",
-    image: "/activities/cooking.jpg"
-  },
-  {
-    name: "Cleaning",
-    image: "/activities/cleaning.jpg"
-  }
+  { name: "Reading",     image: "/activities/reading.jpg" },
+  { name: "Studying",    image: "/activities/studying.jpg" },
+  { name: "Working out", image: "/activities/workingout.jpg" },
+  { name: "Meditating",  image: "/activities/meditating.jpg" },
+  { name: "Cooking",     image: "/activities/cooking.jpg" },
+  { name: "Cleaning",    image: "/activities/cleaning.jpg" }
 ];
 
+const instrumentalActivities = ["Reading", "Studying", "Meditating"];
+
 const CreateVibe = () => {
-
-  const [selectedActivity, setSelectedActivity] = useState(null);
-  const [selectedMood, setSelectedMood] = useState(null);
-  const [videos, setVideos] = useState([]);
   const navigate = useNavigate();
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [selectedMood, setSelectedMood]         = useState(null);
+  const [loading, setLoading]                   = useState(false);
 
-  const generateVibe = async () => {
-    if (!selectedMood || !selectedActivity) {
+  async function handleGenerate() {
+    if (!selectedActivity || !selectedMood) {
       alert("Please select a mood and activity");
       return;
     }
-
+    setLoading(true);
     try {
-      const instrumentalActivities = [
-        "Reading",
-        "Studying",
-        "Meditating"
-      ];
-
-      const query = instrumentalActivities.includes(selectedActivity)
+      const isInstrumental = instrumentalActivities.includes(selectedActivity);
+      const query = isInstrumental
         ? `${selectedMood.name} ${selectedActivity} instrumental playlist`
         : `${selectedMood.name} ${selectedActivity} playlist`;
       const data = await fetchFromAPI(query);
       if (!data.playlists?.items?.length) {
-        alert("No playlists found for this vibe.");
+        alert("No playlists found for this vibe. Try a different combination!");
         return;
       }
+
       const playlist = data.playlists.items[0];
 
       navigate("/environment", {
-        state: {
-          mood: selectedMood,
-          activity: selectedActivity,
-          playlist
-        }
+        state: { mood: selectedMood, activity: selectedActivity, playlist }
       });
-
-    } catch (error) {
-      console.error(error);
-      if (error.response) {
-        console.log("Status:", error.response.status);
-        console.log("Data:", error.response.data);
-      }
-
-      alert("Something went wrong while generating your vibe. Please try again.");
+    } catch (err) {
+      console.error("Failed to fetch playlist:", err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   return (
     <section>
@@ -135,31 +108,20 @@ const CreateVibe = () => {
       <h1>Create a Vibe</h1>
 
       <div className="create">
-
+        {/* ── Left: Selection ── */}
         <div className="selection">
-
           <h2>Choose a Mood</h2>
           <div className="mood-grid">
-          {moods.map((mood) => (
-            <div
-              key={mood.name}
-              className={`mood-card ${
-                  selectedMood === mood.name ? "selected" : ""
-                }`}
-              style={{
-                background: `linear-gradient(
-                  135deg,
-                  ${mood.colors[0]},
-                  ${mood.colors[1]}
-                )`
-              }}
-              onClick={() =>
-                setSelectedMood(mood)
-              }
-            >
-              <h3>{mood.name}</h3>
-            </div>
-          ))}
+            {moods.map((mood) => (
+              <div
+                key={mood.name}
+                className={`mood-card ${selectedMood?.name === mood.name ? "selected" : ""}`}
+                style={{ background: `linear-gradient(135deg, ${mood.colors[0]}, ${mood.colors[1]}, ${mood.colors[2]})` }}
+                onClick={() => setSelectedMood(mood)}
+              >
+                <h3>{mood.name}</h3>
+              </div>
+            ))}
           </div>
 
           <h2>Pick an Activity</h2>
@@ -167,61 +129,38 @@ const CreateVibe = () => {
             {activities.map((activity) => (
               <div
                 key={activity.name}
-                className={`activity-card ${
-                  selectedActivity === activity.name ? "selected" : ""
-                }`}
+                className={`activity-card ${selectedActivity === activity.name ? "selected" : ""}`}
+                style={{ backgroundImage: `url(${activity.image})` }}
                 onClick={() => setSelectedActivity(activity.name)}
               >
-                <div
-                  className={`activity-card ${
-                    selectedActivity === activity.name
-                      ? "selected"
-                      : ""
-                  }`}
-                  style={{
-                    backgroundImage: `url(${activity.image})`
-                  }}
-                  onClick={() => setSelectedActivity(activity.name)}
-                >
-                  <div className="activity-overlay">
-                    <h3>{activity.name}</h3>
-                  </div>
+                <div className="activity-overlay">
+                  <h3>{activity.name}</h3>
                 </div>
               </div>
             ))}
           </div>
-          
-          <button className="generate-btn" onClick={generateVibe}>
-            GENerate
+
+          <button className="generate-btn" onClick={handleGenerate} disabled={loading}>
+            {loading ? "Finding your vibe…" : "GENerate"}
           </button>
         </div>
-        
+
+        {/* ── Right: Preview ── */}
         <div className="preview">
           <h2>Preview</h2>
-            <div
-            style={{
-              padding: "20px",
-              borderRadius: "12px",
-              marginTop: "20px",
-              background: selectedMood
-                ? `linear-gradient(
-                    135deg,
-                    ${selectedMood.colors[0]},
-                    ${selectedMood.colors[1]}
-                  )`
-                : "#333",
-              color: "white"
-            }}>
+          <div style={{
+            padding: "20px", borderRadius: "12px", marginTop: "20px",
+            background: selectedMood
+              ? `linear-gradient(135deg, ${selectedMood.colors[0]}, ${selectedMood.colors[1]}, ${selectedMood.colors[2]})`
+              : "#333",
+            color: "white"
+          }}>
             {selectedActivity && selectedMood ? (
               <div className="preview-text">
-                <h2>
-                  {selectedMood.icon} {selectedMood.name} {selectedActivity}
-                </h2>
+                <h2>{selectedMood.icon} {selectedMood.name} {selectedActivity}</h2>
                 <p>{selectedMood.description}</p>
-                <p>
-                  Music recommendation ready:
-                  <br />
-                  "{selectedMood.name} music for {selectedActivity}"
+                <p style={{ marginTop: "1rem", opacity: 0.8 }}>
+                  Hit GENerate to enter your environment!
                 </p>
               </div>
             ) : (
@@ -229,15 +168,13 @@ const CreateVibe = () => {
             )}
           </div>
         </div>
-  
       </div>
 
-      {/* ── Footer ── */}
       <footer className="home-footer">
         <span className="ev-muted">© 2026 ENVibe · CSE 499</span>
       </footer>
     </section>
   );
-}
+};
 
-export default CreateVibe
+export default CreateVibe;

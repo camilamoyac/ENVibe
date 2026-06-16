@@ -28,7 +28,7 @@ export default function Register() {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      navigate("/login"); // ← fixed: goes to login after register
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         setError("That email is already registered. Try logging in.");
@@ -42,14 +42,12 @@ export default function Register() {
 
   return (
     <div className="ev-page auth-page">
-      {/* Nav */}
       <nav className="ev-nav">
         <Link to="/">
           <img src="/logo.png" alt="ENVibe" className="ev-logo" />
         </Link>
       </nav>
 
-      {/* Card */}
       <main className="auth-main">
         <div className="auth-card">
           <h1 className="ev-h1" style={{ fontSize: "2rem", marginBottom: "0.25rem" }}>
