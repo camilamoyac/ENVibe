@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { savePlaylist } from "../services/storageService";
-import { auth } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../firebase";
 import "../App.css";
 import "../styles/CreateVibe.css";
 import Navbar from "../components/Nav";
@@ -36,7 +36,7 @@ const CreateVibe = () => {
     setApiError("");
     try {
       const data = await searchVibeMusic(selectedMood.name, selectedActivity);
-      console.log("API response:", data);
+      console.log("API response:", data); // ← debug: check console for response shape
       const items = data?.tracks?.items || [];
       console.log("Tracks found:", items.length, items);
       if (items.length === 0) {
@@ -52,30 +52,35 @@ const CreateVibe = () => {
   }
 
   async function handleSaveVibe() {
-    console.log("Save clicked, user:", auth.currentUser); // ← debug
     if (!selectedActivity || !selectedMood) {
       setSaveStatus("error");
       return;
     }
+    const user = auth.currentUser;
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     setSaveStatus("saving");
     try {
-      await savePlaylist({
-        name: `${selectedMood.icon} ${selectedMood.name} ${selectedActivity}`,
+      await addDoc(collection(db, "vibes"), {
+        uid: user.uid,
+        activity: selectedActivity,
         mood: selectedMood.name,
         moodIcon: selectedMood.icon,
         moodColors: selectedMood.colors,
         moodDescription: selectedMood.description,
-        activity: selectedActivity,
         tracks: tracks.map(t => ({
           name: t.data?.name || "",
           artist: t.data?.artists?.items?.[0]?.profile?.name || "",
-          id: t.data?.id || ""
+          uri: t.data?.uri || ""
         })),
+        createdAt: serverTimestamp()
       });
       setSaveStatus("saved");
       setTimeout(() => setSaveStatus(""), 3000);
     } catch (err) {
-      console.error("Save error full:", err.code, err.message);
+      console.error("Save error:", err);
       setSaveStatus("error");
     }
   }
@@ -134,8 +139,10 @@ const CreateVibe = () => {
                 <h2>{selectedMood.icon} {selectedMood.name} {selectedActivity}</h2>
                 <p>{selectedMood.description}</p>
 
+                {/* ── Track results ── */}
                 {loadingTracks && <p style={{ marginTop: "1rem" }}>Finding tracks…</p>}
 
+                {/* ── API error message ── */}
                 {apiError && (
                   <p style={{ marginTop: "1rem", color: "#ff65fa", fontSize: "0.9rem" }}>
                     ⚠️ {apiError}
@@ -169,6 +176,7 @@ const CreateVibe = () => {
                   </p>
                 )}
 
+                {/* ── Save Vibe button ── */}
                 <button
                   className="generate-btn"
                   onClick={handleSaveVibe}
@@ -187,6 +195,11 @@ const CreateVibe = () => {
           </div>
         </div>
       </div>
+
+      {/* ── Footer ── */}
+      <footer className="home-footer">
+        <span className="ev-muted">© 2026 ENVibe · CSE 499</span>
+      </footer>
     </section>
   );
 };
