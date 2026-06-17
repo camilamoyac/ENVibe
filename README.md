@@ -110,8 +110,9 @@ Each vibe contains:
 This project requires a RapidAPI key for Spotify.
 Create a `.env` file in the project root and add:
 
+```bash
 VITE_RAPID_API_KEY=your_api_key_here
-
+```
 
 ---
 
