@@ -152,10 +152,9 @@ h3 {
     box-shadow:
         0 4px 15px rgba(0,0,0,.25);
 }
-.ev-link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: inherit;
-  font: inherit;
+
+.ev-link.active {
+  color: #c084fc;
+  font-weight: 600;
+  border-bottom: 2px solid #c084fc;
 }

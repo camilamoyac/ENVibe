@@ -69,14 +69,6 @@
     gap: 1rem;
 }
 
-.ev-link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: inherit;
-  font: inherit;
-}
-
 /* background */
 @keyframes move {
     100% {
