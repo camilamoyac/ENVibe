@@ -17,12 +17,12 @@ export default function Navbar() {
 
   return (
     <nav className="ev-nav">
-      <Link to="/createVibe">
+      <Link to="/">
         <img src="/logo.png" alt="ENVibe" className="ev-logo" />
       </Link>
       <ul className="ev-nav-links">
-        <li><Link to="/createVibe" className="ev-link">Create Vibe</Link></li>
-        <li><Link to="/saved" className="ev-link">Saved</Link></li>
+        <li><Link to="/create-vibe" className="ev-link">Create Vibe</Link></li>
+        <li><Link to="/saved-vibes" className="ev-link">My Saved Vibes</Link></li>
         <li>
           <button className="ev-btn-ghost" onClick={handleLogout}
             style={{ fontSize: "1rem", padding: "0.4rem 1.1rem", cursor: "pointer" }}>

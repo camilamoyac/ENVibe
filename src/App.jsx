@@ -6,10 +6,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateVibe from "./pages/CreateVibe";
-import SavedPlaylists from "./pages/SavedPlaylists";
 import Environment from "./pages/Environment";
 import SavedVibes from "./pages/SavedVibes";
-import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   return (
@@ -20,32 +18,21 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/environment" element={<Environment />} />
-        <Route path="/saved-vibes" element={<SavedVibes />} />
 
         {/* Protected routes — user must be logged in */}
         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/createVibe"
+          path="/create-vibe"
           element={
             <ProtectedRoute>
               <CreateVibe />
             </ProtectedRoute>
           }
         />
-
         <Route
-          path="/saved"
+          path="/saved-vibes"
           element={
             <ProtectedRoute>
-              <SavedPlaylists />
+              <SavedVibes />
             </ProtectedRoute>
           }
         />

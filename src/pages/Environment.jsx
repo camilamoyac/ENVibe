@@ -83,7 +83,7 @@ function Environment() {
                 <div className="buttons">
                     <button onClick={handleSaveVibe} className="ev-btn">Save Vibe</button>
                     <ul className="ev-nav-links">
-                    <li><Link to="/createVibe" className="ev-link">New Vibe</Link></li>
+                    <li><Link to="/create-vibe" className="ev-link">New Vibe</Link></li>
                     <li><Link to="/saved-vibes" className="ev-link">My Saved Vibes</Link></li>
                     </ul>
                 </div>

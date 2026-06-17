@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard"); // ← fixed: goes to Dashboard after login
+      navigate("/create-vibe"); // ← fixed: goes to Create Vibe after login
     } catch (err) {
       setError("Incorrect email or password. Please try again.");
     } finally {

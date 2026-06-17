@@ -2,20 +2,24 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { collection, getDocs, orderBy, query} from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged} from "firebase/auth";
 import "../styles/SavedVibes.css";
+import Navbar from "../components/Nav";
 
 function SavedVibes() {
   const [vibes, setVibes] = useState([]);
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-      try {
-        await signOut(auth);
-        navigate("/login");
-      } catch (error) {
-        console.error(error);
-      }
+    const formatDate = (timestamp) => {
+        if (!timestamp) return "Unknown date";
+
+        const date = timestamp.toDate(); // Firestore Timestamp → JS Date
+
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+        });
     };
 
   useEffect(() => {
@@ -56,17 +60,7 @@ function SavedVibes() {
 
   return (
     <div className="saved-vibes">
-
-        {/* ── Nav ── */}
-      <nav className="ev-nav">
-        <Link to="/">
-          <img src="/logo.png" alt="ENVibe" className="ev-logo" />
-        </Link>
-        <ul className="ev-nav-links">
-          <li><Link to="/createVibe" className="ev-link">Create Vibe</Link></li>
-          <li><button onClick={handleLogout} className="ev-link">Logout </button></li>
-        </ul>
-      </nav>
+        <Navbar />
 
       <h1>My Saved Vibes</h1>
 
@@ -98,7 +92,7 @@ function SavedVibes() {
 
                 <h2> {vibe.moodIcon} {vibe.mood} {vibe.activity} </h2>
                 <h3>{vibe.playlistName}</h3>
-
+                <p className="vibe-date"> Saved on {formatDate(vibe.createdAt)}</p>
             </div>
         ))}
       </div>

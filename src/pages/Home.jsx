@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-//import "../styles/CreateVibe.css";
 import "../styles/Home.css";
 
 export default function Home() {
@@ -25,7 +24,7 @@ export default function Home() {
             perfect digital environment.
           </p>
           <div className="home-cta-group">
-            <Link to="/createVibe" className="ev-btn">Create a Vibe</Link>
+            <Link to="/create-vibe" className="ev-btn">Create a Vibe</Link>
             <Link to="/login" className="ev-btn-ghost">Log In</Link>
           </div>
         </div>

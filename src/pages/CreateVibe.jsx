@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { fetchFromAPI } from "../utilities/fetchFromAPI";
 import "../App.css";
 import "../styles/CreateVibe.css";
 import Navbar from "../components/Nav";
-
-
 
 const moods = [
   {
@@ -65,15 +62,6 @@ const CreateVibe = () => {
   const [selectedMood, setSelectedMood]         = useState(null);
   const [loading, setLoading]                   = useState(false);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/login");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   async function handleGenerate() {
     if (!selectedActivity || !selectedMood) {
       alert("Please select a mood and activity");
@@ -116,16 +104,7 @@ const CreateVibe = () => {
 
   return (
     <section>
-      {/* ── Nav ── */}
-      <nav className="ev-nav">
-        <Link to="/">
-          <img src="/logo.png" alt="ENVibe" className="ev-logo" />
-        </Link>
-        <ul className="ev-nav-links">
-          <li><Link to="/saved-vibes" className="ev-link">My Saved Vibes</Link></li>
-          <li><button onClick={handleLogout} className="ev-link">Logout </button></li>
-        </ul>
-      </nav>
+      <Navbar />
 
       <h1>Create a Vibe</h1>
 
