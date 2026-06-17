@@ -123,16 +123,17 @@ npm install
 
 # Start development server
 npm run dev
+```
 
 ---
 
 ## 📌 Future Improvements
 
-- Add user profiles and preferences
-- Improve recommendation algorithm
-- Add more music providers (YouTube, Apple Music)
-- Enhanced animation system for environment page
+- Add more customization to Create a vibe
+- Enhanced custom animation system for environment page
 - Social sharing of vibes
+- Sync animation to music playing
+- Mobile interface and responsiveness
 
 ---
 
