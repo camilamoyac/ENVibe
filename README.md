@@ -8,14 +8,14 @@ Users can create, save, and revisit custom environments that blend visual mood s
 
 ## 🌐 Live Features
 
-- 🔐 User authentication (Firebase Auth)
-- 🎭 Mood-based environment generation
-- 🏃 Activity-based personalization
-- 🎵 Spotify playlist integration (RapidAPI)
-- 💾 Save and retrieve custom vibes (Firestore)
-- 📅 Timestamped saved environments
-- 🧭 Protected routes for authenticated users
-- 🌈 Dynamic gradient + particle-based UI environment
+-  User authentication (Firebase Auth)
+-  Mood-based environment generation
+-  Activity-based personalization
+-  Spotify playlist integration (RapidAPI)
+-  Save and retrieve custom vibes (Firestore)
+-  Timestamped saved environments
+-  Protected routes for authenticated users
+-  Dynamic gradient + particle-based UI environment
 
 ---
 
