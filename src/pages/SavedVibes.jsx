@@ -2,16 +2,28 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { collection, getDocs, orderBy, query} from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import "../styles/SavedVibes.css";
 
 function SavedVibes() {
   const [vibes, setVibes] = useState([]);
   const navigate = useNavigate();
 
+  const handleLogout = async () => {
+      try {
+        await signOut(auth);
+        navigate("/login");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        if (!user) return;
+        if (!user) {
+            navigate("/login");
+            return;
+        }
 
         try {
         const vibesRef = collection(
@@ -52,7 +64,7 @@ function SavedVibes() {
         </Link>
         <ul className="ev-nav-links">
           <li><Link to="/createVibe" className="ev-link">Create Vibe</Link></li>
-          <li><Link to="/logout" className="ev-link">Logout</Link></li>
+          <li><button onClick={handleLogout} className="ev-link">Logout </button></li>
         </ul>
       </nav>
 

@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { fetchFromAPI } from "../utilities/fetchFromAPI";
 import "../App.css";
 import "../styles/CreateVibe.css";
 import Navbar from "../components/Nav";
-import { fetchFromAPI } from "../utilities/fetchFromAPI";
+
 
 
 const moods = [
@@ -62,6 +65,15 @@ const CreateVibe = () => {
   const [selectedMood, setSelectedMood]         = useState(null);
   const [loading, setLoading]                   = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   async function handleGenerate() {
     if (!selectedActivity || !selectedMood) {
       alert("Please select a mood and activity");
@@ -70,10 +82,16 @@ const CreateVibe = () => {
     setLoading(true);
     try {
       const isInstrumental = instrumentalActivities.includes(selectedActivity);
+
       const query = isInstrumental
         ? `${selectedMood.name} ${selectedActivity} instrumental playlist`
         : `${selectedMood.name} ${selectedActivity} playlist`;
-      const data = await fetchFromAPI(query);
+
+      const data = await fetchFromAPI("search/", {
+        q: query,
+        type: "playlists"
+      });
+
       if (!data.playlists?.items?.length) {
         alert("No playlists found for this vibe. Try a different combination!");
         return;
@@ -86,7 +104,11 @@ const CreateVibe = () => {
       });
     } catch (err) {
       console.error("Failed to fetch playlist:", err);
+      if (err.response?.status === 500) {
+        alert("Spotify is temporarily unavailable. Please wait a few seconds and try again.");
+      } else {
       alert("Something went wrong. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -101,7 +123,7 @@ const CreateVibe = () => {
         </Link>
         <ul className="ev-nav-links">
           <li><Link to="/saved-vibes" className="ev-link">My Saved Vibes</Link></li>
-          <li><Link to="/logout" className="ev-link">Logout</Link></li>
+          <li><button onClick={handleLogout} className="ev-link">Logout </button></li>
         </ul>
       </nav>
 
@@ -116,7 +138,7 @@ const CreateVibe = () => {
               <div
                 key={mood.name}
                 className={`mood-card ${selectedMood?.name === mood.name ? "selected" : ""}`}
-                style={{ background: `linear-gradient(135deg, ${mood.colors[0]}, ${mood.colors[1]}, ${mood.colors[2]})` }}
+                style={{ background: `linear-gradient(135deg, ${mood.colors[0]}, ${mood.colors[1]})` }}
                 onClick={() => setSelectedMood(mood)}
               >
                 <h3>{mood.name}</h3>
@@ -151,7 +173,7 @@ const CreateVibe = () => {
           <div style={{
             padding: "20px", borderRadius: "12px", marginTop: "20px",
             background: selectedMood
-              ? `linear-gradient(135deg, ${selectedMood.colors[0]}, ${selectedMood.colors[1]}, ${selectedMood.colors[2]})`
+              ? `linear-gradient(135deg, ${selectedMood.colors[0]}, ${selectedMood.colors[1]})`
               : "#333",
             color: "white"
           }}>
