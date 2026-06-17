@@ -3,26 +3,62 @@ import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 
-export default function ProtectedRoute({ children }) {
-  const [user, setUser] = useState(undefined); // undefined = still checking
+/*
+  ─────────────────────────────────────────────
+  PROTECTED ROUTE COMPONENT
+  ─────────────────────────────────────────────
+  Purpose:
+  Restricts access to certain routes unless the user is authenticated.
 
+  How it works:
+  - Listens to Firebase Auth state
+  - Shows loading state while checking auth
+  - Redirects unauthenticated users to login
+  - Renders protected content if user is logged in
+*/
+
+export default function ProtectedRoute({ children }) {
+  /*
+    user state:
+    - undefined → still checking authentication state
+    - null → not logged in
+    - object → logged in user
+  */
+  const [user, setUser] = useState(undefined);
+
+  /*
+    ─────────────────────────────────────────────
+    AUTH STATE LISTENER
+    ─────────────────────────────────────────────
+    Subscribes to Firebase authentication changes
+    and updates local state accordingly.
+  */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser); // null = not logged in, object = logged in
+      setUser(currentUser);
     });
+
     return () => unsubscribe();
   }, []);
 
-  // Still checking auth state — show nothing (or a spinner)
+  /*
+    While Firebase is checking authentication status,
+    we avoid rendering anything to prevent flicker.
+  */
   if (user === undefined) {
     return <div className="auth-loading">Loading...</div>;
   }
 
-  // Not logged in — redirect to login
+  /*
+    If user is not authenticated, redirect to login page.
+    "replace" prevents going back to protected route via browser back button.
+  */
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Logged in — render the protected page
+  /*
+    If authenticated, render protected page content.
+  */
   return children;
 }

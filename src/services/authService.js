@@ -6,17 +6,36 @@ import {
 
 import { auth } from "../firebase";
 
-// Register a new user
+/*
+  ─────────────────────────────────────────────
+  AUTH SERVICE (FIREBASE WRAPPER)
+  ─────────────────────────────────────────────
+  This file centralizes all Firebase authentication logic.
+
+  Purpose:
+  - Keeps auth logic separate from UI components
+  - Makes authentication reusable across the app
+  - Improves code organization and maintainability
+*/
+
+/*
+  Registers a new user using Firebase Authentication.
+  Returns a Promise from Firebase.
+*/
 export const registerUser = (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-// Log in an existing user
+/*
+  Logs in an existing user using Firebase Authentication.
+*/
 export const loginUser = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-// Log out the current user
+/*
+  Logs out the currently authenticated user.
+*/
 export const logoutUser = () => {
   return signOut(auth);
 };

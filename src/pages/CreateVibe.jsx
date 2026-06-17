@@ -6,6 +6,16 @@ import "../App.css";
 import "../styles/CreateVibe.css";
 import Navbar from "../components/Nav";
 
+/*
+  ─────────────────────────────────────────────
+  MOOD CONFIGURATION DATA
+  ─────────────────────────────────────────────
+  Each mood defines:
+  - name: displayed label
+  - colors: gradient background used in UI
+  - description: shown in preview section
+  - icon: visual emoji representation
+*/
 const moods = [
   {
     name: "Cozy",
@@ -45,6 +55,12 @@ const moods = [
   }
 ];
 
+/*
+  ─────────────────────────────────────────────
+  ACTIVITY OPTIONS
+  ─────────────────────────────────────────────
+  Each activity includes an image used in the selection grid.
+*/
 const activities = [
   { name: "Reading",     image: "/activities/reading.jpg" },
   { name: "Studying",    image: "/activities/studying.jpg" },
@@ -54,32 +70,54 @@ const activities = [
   { name: "Cleaning",    image: "/activities/cleaning.jpg" }
 ];
 
+/*
+  Activities that require instrumental music only.
+  Used to adjust playlist query generation.
+*/
 const instrumentalActivities = ["Reading", "Studying", "Meditating"];
 
 const CreateVibe = () => {
   const navigate = useNavigate();
-  const [selectedActivity, setSelectedActivity] = useState(null);
-  const [selectedMood, setSelectedMood]         = useState(null);
-  const [loading, setLoading]                   = useState(false);
 
+  // User selections
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [selectedMood, setSelectedMood] = useState(null);
+
+  // Loading state for API request
+  const [loading, setLoading] = useState(false);
+
+  /*
+    ─────────────────────────────────────────────
+    GENERATE VIBE (CORE FEATURE)
+    ─────────────────────────────────────────────
+    1. Validates user selections
+    2. Builds Spotify search query based on mood + activity
+    3. Calls external API for playlist search
+    4. Navigates to Environment page with selected data
+  */
   async function handleGenerate() {
     if (!selectedActivity || !selectedMood) {
       alert("Please select a mood and activity");
       return;
     }
+
     setLoading(true);
+
     try {
       const isInstrumental = instrumentalActivities.includes(selectedActivity);
 
+      // Build search query dynamically based on context
       const query = isInstrumental
         ? `${selectedMood.name} ${selectedActivity} instrumental playlist`
         : `${selectedMood.name} ${selectedActivity} playlist`;
 
+      // Fetch playlists from external API (Spotify wrapper)
       const data = await fetchFromAPI("search/", {
         q: query,
         type: "playlists"
       });
 
+      // Handle empty results
       if (!data.playlists?.items?.length) {
         alert("No playlists found for this vibe. Try a different combination!");
         return;
@@ -87,16 +125,25 @@ const CreateVibe = () => {
 
       const playlist = data.playlists.items[0];
 
+      // Navigate to immersive environment page with selected vibe data
       navigate("/environment", {
-        state: { mood: selectedMood, activity: selectedActivity, playlist }
+        state: {
+          mood: selectedMood,
+          activity: selectedActivity,
+          playlist
+        }
       });
+
     } catch (err) {
       console.error("Failed to fetch playlist:", err);
+
+      // Handle API-specific error vs generic error
       if (err.response?.status === 500) {
         alert("Spotify is temporarily unavailable. Please wait a few seconds and try again.");
       } else {
-      alert("Something went wrong. Please try again.");
+        alert("Something went wrong. Please try again.");
       }
+
     } finally {
       setLoading(false);
     }
@@ -104,20 +151,28 @@ const CreateVibe = () => {
 
   return (
     <section>
+      {/* Reusable navigation component */}
       <Navbar />
 
       <h1>Create a Vibe</h1>
 
       <div className="create">
-        {/* ── Left: Selection ── */}
+
+        {/* ─────────────────────────────
+            LEFT PANEL: USER SELECTIONS
+        ───────────────────────────── */}
         <div className="selection">
+
+          {/* Mood selection grid */}
           <h2>Choose a Mood</h2>
           <div className="mood-grid">
             {moods.map((mood) => (
               <div
                 key={mood.name}
                 className={`mood-card ${selectedMood?.name === mood.name ? "selected" : ""}`}
-                style={{ background: `linear-gradient(135deg, ${mood.colors[0]}, ${mood.colors[1]})` }}
+                style={{
+                  background: `linear-gradient(135deg, ${mood.colors[0]}, ${mood.colors[1]})`
+                }}
                 onClick={() => setSelectedMood(mood)}
               >
                 <h3>{mood.name}</h3>
@@ -125,6 +180,7 @@ const CreateVibe = () => {
             ))}
           </div>
 
+          {/* Activity selection grid */}
           <h2>Pick an Activity</h2>
           <div className="activity-grid">
             {activities.map((activity) => (
@@ -141,25 +197,42 @@ const CreateVibe = () => {
             ))}
           </div>
 
-          <button className="generate-btn" onClick={handleGenerate} disabled={loading}>
+          {/* Generate button triggers playlist search */}
+          <button
+            className="generate-btn"
+            onClick={handleGenerate}
+            disabled={loading}
+          >
             {loading ? "Finding your vibe…" : "GENerate"}
           </button>
         </div>
 
-        {/* ── Right: Preview ── */}
+        {/* ─────────────────────────────
+            RIGHT PANEL: LIVE PREVIEW
+        ───────────────────────────── */}
         <div className="preview">
           <h2>Preview</h2>
-          <div style={{
-            padding: "20px", borderRadius: "12px", marginTop: "20px",
-            background: selectedMood
-              ? `linear-gradient(135deg, ${selectedMood.colors[0]}, ${selectedMood.colors[1]})`
-              : "#333",
-            color: "white"
-          }}>
+
+          <div
+            style={{
+              padding: "20px",
+              borderRadius: "12px",
+              marginTop: "20px",
+              background: selectedMood
+                ? `linear-gradient(135deg, ${selectedMood.colors[0]}, ${selectedMood.colors[1]})`
+                : "#333",
+              color: "white"
+            }}
+          >
+            {/* Conditional preview display */}
             {selectedActivity && selectedMood ? (
               <div className="preview-text">
-                <h2>{selectedMood.icon} {selectedMood.name} {selectedActivity}</h2>
+                <h2>
+                  {selectedMood.icon} {selectedMood.name} {selectedActivity}
+                </h2>
+
                 <p>{selectedMood.description}</p>
+
                 <p style={{ marginTop: "1rem", opacity: 0.8 }}>
                   Hit GENerate to enter your environment!
                 </p>
@@ -171,6 +244,7 @@ const CreateVibe = () => {
         </div>
       </div>
 
+      {/* ── Footer ── */}
       <footer className="home-footer">
         <span className="ev-muted">© 2026 ENVibe · CSE 499</span>
       </footer>
